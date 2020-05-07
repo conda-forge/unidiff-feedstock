@@ -1,5 +1,5 @@
 {% set name = "unidiff" %}
-{% set version = "0.5.5" %}
+{% set version = "0.6.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,12 +7,12 @@ package:
 
 source:
   url: https://github.com/matiasb/python-{{ name }}/archive/v{{ version }}.tar.gz
-  sha256: 5d351e402191b10e6b5164e6ce40b683f5f63eaedccc9a17d3ed47bbe3873634
+  sha256: 00bd92c4988a2daba239222e579284da48983f81b929fad4249949d6a5496723
 
 build:
   noarch: python
   number: 0
-  script: "{{ PYTHON }} -m pip install . --no-deps -vv"
+  script: {{ PYTHON }} -m pip install . --no-deps -vv
 
 requirements:
   host:
@@ -34,7 +34,7 @@ about:
   license: MIT
   license_family: MIT
   license_file: LICENSE
-  summary: 'Simple Python library to parse and interact with unified diff data.'
+  summary: Simple Python library to parse and interact with unified diff data.
 
 extra:
   recipe-maintainers:
