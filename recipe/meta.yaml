@@ -1,20 +1,23 @@
 {% set name = "unidiff" %}
-{% set version = "0.5.5" %}
+{% set version = "0.7.5" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://github.com/matiasb/python-{{ name }}/archive/v{{ version }}.tar.gz
-  sha256: 5d351e402191b10e6b5164e6ce40b683f5f63eaedccc9a17d3ed47bbe3873634
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/unidiff-{{ version }}.tar.gz
+  sha256: 2e5f0162052248946b9f0970a40e9e124236bf86c82b70821143a6fc1dea2574
 
 build:
-  noarch: python
+  # Due to the use of scripts, this cannot be noarch
   number: 0
-  script: "{{ PYTHON }} -m pip install . --no-deps -vv"
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
+  build:
+    - python                                 # [build_platform != target_platform]
+    - cross-python_{{ target_platform }}     # [build_platform != target_platform]
   host:
     - python
     - pip
@@ -22,11 +25,14 @@ requirements:
     - python
 
 test:
+  requires:
+    - pip
   imports:
     - unidiff
   source_files:
     - tests
   commands:
+    - pip check
     - python -m unittest discover -s tests/
 
 about:
